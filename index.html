@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FlatFix — Local Home Services</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">Flat<span>Fix</span></div>
+  <button class="menu" onclick="toggleNav()">☰</button>
+  <nav id="nav"><a href="#services">Services</a><a href="#how">How it works</a><a href="#book">Book a service</a><a href="#worker">For workers</a></nav>
+</header>
+
+<section class="hero">
+  <div>
+    <p class="eyebrow">LOCAL HOME SERVICES</p>
+    <h1>Trusted help for your flat, <span>on demand.</span></h1>
+    <p class="sub">Book verified local electricians, plumbers, cleaners, AC technicians and more from one simple place.</p>
+    <div class="hero-actions"><a class="btn primary" href="#services">Find a service</a><a class="btn ghost" href="#book">Book now</a></div>
+    <div class="trust"><b>✓</b> Local workers &nbsp; <b>✓</b> Transparent booking &nbsp; <b>✓</b> Ratings & reviews</div>
+  </div>
+  <div class="hero-card">
+    <div class="mini-head"><span>Popular nearby</span><span class="live">● Available</span></div>
+    <div class="worker"><div class="avatar">RK</div><div><b>Rahul Kumar</b><small>Electrician · 4.9 ★</small></div><strong>₹199+</strong></div>
+    <div class="worker"><div class="avatar alt">AM</div><div><b>Arindam Mondal</b><small>Plumber · 4.8 ★</small></div><strong>₹149+</strong></div>
+    <div class="worker"><div class="avatar third">SB</div><div><b>Sumit Das</b><small>Home Cleaning · 4.9 ★</small></div><strong>₹299+</strong></div>
+  </div>
+</section>
+
+<section id="services" class="section">
+  <div class="section-title"><p class="eyebrow">SERVICES</p><h2>What do you need help with?</h2><p>Choose a service and tell us what needs fixing.</p></div>
+  <div class="grid">
+    <button class="service" onclick="choose('Electrician','⚡')"><i>⚡</i><b>Electrician</b><span>Wiring, fan, switch</span></button>
+    <button class="service" onclick="choose('Plumber','🚰')"><i>🚰</i><b>Plumber</b><span>Tap, pipe, leakage</span></button>
+    <button class="service" onclick="choose('Home Cleaning','🧹')"><i>🧹</i><b>Home Cleaning</b><span>Flat, kitchen, bathroom</span></button>
+    <button class="service" onclick="choose('AC Service','❄️')"><i>❄️</i><b>AC Service</b><span>Repair & maintenance</span></button>
+    <button class="service" onclick="choose('Carpenter','🔨')"><i>🔨</i><b>Carpenter</b><span>Furniture & doors</span></button>
+    <button class="service" onclick="choose('Painter','🎨')"><i>🎨</i><b>Painter</b><span>Room & flat painting</span></button>
+    <button class="service" onclick="choose('Appliance Repair','🔧')"><i>🔧</i><b>Appliance Repair</b><span>Fridge, washing machine</span></button>
+    <button class="service" onclick="choose('Pest Control','🪳')"><i>🪳</i><b>Pest Control</b><span>Home treatment</span></button>
+  </div>
+</section>
+
+<section id="how" class="section light">
+  <div class="section-title"><p class="eyebrow">SIMPLE PROCESS</p><h2>Book in three steps</h2></div>
+  <div class="steps"><div><span>01</span><h3>Choose service</h3><p>Select what you need and describe the problem.</p></div><div><span>02</span><h3>Pick a time</h3><p>Add your address and preferred date & time.</p></div><div><span>03</span><h3>Get it done</h3><p>A local worker visits and completes the job.</p></div></div>
+</section>
+
+<section id="book" class="section booking">
+  <div class="booking-copy"><p class="eyebrow">QUICK BOOKING</p><h2>Request a service</h2><p>Fill this form. This demo stores the booking in your browser.</p><div class="notice">🔒 Demo only — payment and real worker dispatch are not connected yet.</div></div>
+  <form id="bookingForm" onsubmit="submitBooking(event)">
+    <label>Service<select id="service" required><option value="">Select a service</option><option>Electrician</option><option>Plumber</option><option>Home Cleaning</option><option>AC Service</option><option>Carpenter</option><option>Painter</option><option>Appliance Repair</option><option>Pest Control</option></select></label>
+    <label>Your name<input id="name" required placeholder="Enter your name"></label>
+    <label>Phone<input id="phone" required type="tel" placeholder="10-digit mobile number"></label>
+    <label>Address<textarea id="address" required placeholder="Flat / building / area"></textarea></label>
+    <div class="two"><label>Date<input id="date" required type="date"></label><label>Time<input id="time" required type="time"></label></div>
+    <label>Problem / work details<textarea id="details" placeholder="Example: bathroom tap leaking"></textarea></label>
+    <button class="btn primary full">Request booking</button>
+  </form>
+</section>
+
+<section id="worker" class="worker-cta"><div><p class="eyebrow">FOR LOCAL PROFESSIONALS</p><h2>Get more jobs in your area.</h2><p>Join FlatFix as an electrician, plumber, cleaner, technician or other service professional.</p></div><button class="btn lightbtn" onclick="workerJoin()">Join as a worker</button></section>
+
+<footer><div class="brand">Flat<span>Fix</span></div><p>Local home services made simple.</p><small>© 2026 FlatFix · Demo MVP</small></footer>
+<div id="toast" class="toast"></div>
+<script src="app.js"></script>
+</body>
+</html>
