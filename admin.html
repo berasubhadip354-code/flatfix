@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FlatFix Admin</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f7f6;
+      color: #17211d;
+    }
+    header {
+      background: #0f8f68;
+      color: white;
+      padding: 20px;
+    }
+    header h1 { margin: 0; }
+    .wrap {
+      max-width: 1000px;
+      margin: 25px auto;
+      padding: 0 16px;
+    }
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    button {
+      border: 0;
+      border-radius: 8px;
+      padding: 11px 16px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .danger { background: #e74c3c; color: white; }
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 18px;
+      margin-bottom: 14px;
+      box-shadow: 0 3px 15px rgba(0,0,0,.06);
+    }
+    .booking-id {
+      color: #0f8f68;
+      font-weight: bold;
+    }
+    .empty {
+      text-align: center;
+      padding: 50px 20px;
+      background: white;
+      border-radius: 14px;
+    }
+    .row {
+      margin: 8px 0;
+    }
+    .label {
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="wrap">
+    <h1>FlatFix Admin</h1>
+    <p>Booking Dashboard</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="top">
+    <h2>Customer Bookings</h2>
+    <button class="danger" onclick="clearBookings()">
+      Clear All
+    </button>
+  </div>
+
+  <div id="bookings"></div>
+
+</div>
+
+<script>
+function loadBookings() {
+
+  const container = document.getElementById("bookings");
+
+  const bookings =
+    JSON.parse(localStorage.getItem("flatfixBookings") || "[]");
+
+  if (bookings.length === 0) {
+    container.innerHTML = `
+      <div class="empty">
+        <h2>No bookings yet</h2>
+        <p>New FlatFix bookings will appear here.</p>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = bookings
+    .slice()
+    .reverse()
+    .map(function (b) {
+
+      return `
+        <div class="card">
+
+          <div class="booking-id">
+            ${b.id}
+          </div>
+
+          <div class="row">
+            <span class="label">Service:</span>
+            ${b.service}
+          </div>
+
+          <div class="row">
+            <span class="label">Customer:</span>
+            ${b.name}
+          </div>
+
+          <div class="row">
+            <span class="label">Phone:</span>
+            ${b.phone}
+          </div>
+
+          <div class="row">
+            <span class="label">Date:</span>
+            ${b.date}
+          </div>
+
+          <div class="row">
+            <span class="label">Time:</span>
+            ${b.time}
+          </div>
+
+          <div class="row">
+            <span class="label">Address:</span>
+            ${b.address}
+          </div>
+
+          <div class="row">
+            <span class="label">Problem:</span>
+            ${b.details || "Not provided"}
+          </div>
+
+        </div>
+      `;
+
+    })
+    .join("");
+}
+
+function clearBookings() {
+
+  if (!confirm("Delete all bookings?")) {
+    return;
+  }
+
+  localStorage.removeItem("flatfixBookings");
+
+  loadBookings();
+}
+
+loadBookings();
+</script>
+
+</body>
+</html>
