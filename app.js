@@ -13,7 +13,7 @@ async function loginWithGitHub() {
     const { error } = await supabaseClient.auth.signInWithOAuth({
       provider: "github",
       options: {
-        redirectTo: window.location.origin
+        redirectTo: window.location.origin + "/flatfix/"
       }
     });
 
