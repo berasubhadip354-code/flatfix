@@ -87,8 +87,8 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-const SUPABASE_URL = "YOUR_SUPABASE_URL";
-const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
+const SUPABASE_URL = "https://uwwovsilsudadzjblavj.supabase.co/rest/v1/";
+const SUPABASE_ANON_KEY = "sb_publishable_Pe0ReHw39h52k3rgGRqDHA_ct6hc-tY";
 
 const supabase = window.supabase.createClient(
   SUPABASE_URL,
@@ -157,7 +157,7 @@ async function loadBookings() {
 
         <div class="row">
           <span class="label">Date:</span>
-          ${b["booking date"] || ""}
+          ${b["booking date"] pp|| ""}
         </div>
 
         <div class="row">
