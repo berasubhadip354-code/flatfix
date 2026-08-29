@@ -86,15 +86,45 @@
 
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
-function loadBookings() {
+const SUPABASE_URL = "YOUR_SUPABASE_URL";
+const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
+
+const supabase = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY
+);
+
+async function loadBookings() {
 
   const container = document.getElementById("bookings");
 
-  const bookings =
-    JSON.parse(localStorage.getItem("flatfixBookings") || "[]");
+  container.innerHTML = `
+    <div class="empty">
+      <h2>Loading bookings...</h2>
+    </div>
+  `;
 
-  if (bookings.length === 0) {
+  const { data: bookings, error } = await supabase
+    .from("Booking")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error(error);
+
+    container.innerHTML = `
+      <div class="empty">
+        <h2>Could not load bookings</h2>
+        <p>${error.message}</p>
+      </div>
+    `;
+    return;
+  }
+
+  if (!bookings || bookings.length === 0) {
     container.innerHTML = `
       <div class="empty">
         <h2>No bookings yet</h2>
@@ -104,69 +134,57 @@ function loadBookings() {
     return;
   }
 
-  container.innerHTML = bookings
-    .slice()
-    .reverse()
-    .map(function (b) {
+  container.innerHTML = bookings.map(function (b) {
+    return `
+      <div class="card">
 
-      return `
-        <div class="card">
-
-          <div class="booking-id">
-            ${b.id}
-          </div>
-
-          <div class="row">
-            <span class="label">Service:</span>
-            ${b.service}
-          </div>
-
-          <div class="row">
-            <span class="label">Customer:</span>
-            ${b.name}
-          </div>
-
-          <div class="row">
-            <span class="label">Phone:</span>
-            ${b.phone}
-          </div>
-
-          <div class="row">
-            <span class="label">Date:</span>
-            ${b.date}
-          </div>
-
-          <div class="row">
-            <span class="label">Time:</span>
-            ${b.time}
-          </div>
-
-          <div class="row">
-            <span class="label">Address:</span>
-            ${b.address}
-          </div>
-
-          <div class="row">
-            <span class="label">Problem:</span>
-            ${b.details || "Not provided"}
-          </div>
-
+        <div class="booking-id">
+          Booking #${b.id}
         </div>
-      `;
 
-    })
-    .join("");
-}
+        <div class="row">
+          <span class="label">Customer:</span>
+          ${b.name || ""}
+        </div>
 
-function clearBookings() {
+        <div class="row">
+          <span class="label">Phone:</span>
+          ${b.Phone || ""}
+        </div>
 
-  if (!confirm("Delete all bookings?")) {
-    return;
-  }
+        <div class="row">
+          <span class="label">Email:</span>
+          ${b.email || ""}
+        </div>
 
-  localStorage.removeItem("flatfixBookings");
+        <div class="row">
+          <span class="label">Date:</span>
+          ${b["booking date"] || ""}
+        </div>
 
-  loadBookings();
+        <div class="row">
+          <span class="label">Time:</span>
+          ${b["booking time"] || ""}
+        </div>
+
+        <div class="row">
+          <span class="label">Guests:</span>
+          ${b.guests || ""}
+        </div>
+
+        <div class="row">
+          <span class="label">Status:</span>
+          ${b.status || "Pending"}
+        </div>
+
+        <div class="row">
+          <span class="label">Message:</span>
+          ${b.message || "Not provided"}
+        </div>
+
+      </div>
+    `;
+  }).join("");
 }
 
 loadBookings();
